@@ -49,11 +49,21 @@ namespace FormularioBasico
         //btnRegister
         private void button2_Click(object sender, EventArgs e)
         {
-            int cd_func;
+            int cd_func; //variavel que vai guardar o código
+
+            //Se nao for um inteiro maior que zero ele da as mensagens de erro
             if(!int.TryParse(txtCodigo.Text, out cd_func))
             {
-                MessageBox.Show("Código inválido !! Digitar um valor inteiro");
+                MessageBox.Show("Código inválido !! Digitar um valor inteiro", "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtCodigo.Focus(); //Deixa o cursor do mouse na textbox q deu erro.
             }
+            else if(cd_func == 0)
+            {
+                MessageBox.Show("Código inválido, por favor inserir um valor inteiro maior que zero.", "ERRO", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtCodigo.Focus();
+            }
+
+            txtCodigo.Text = "";//Reseta a textbox
    
         }
 
