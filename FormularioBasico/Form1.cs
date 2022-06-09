@@ -19,6 +19,11 @@ namespace FormularioBasico
             InitializeComponent();
         }
 
+        int cd_func = 0; //variavel que vai guardar o código
+        string funcionario = "";
+        string cpf = "";
+        string sql; //Variavel que vai guardar o comando sql que vai ler a db
+
         SqlConnection cn = new SqlConnection("Data Source=lab1-20;Initial Catalog=bd_turmaB;User ID=sa;password=1234567"); //Conecta com o bd no sqlserver
         SqlCommand cm = new SqlCommand(); //Faz os comandos sql
         SqlDataReader rd; //lê o bd
@@ -35,6 +40,31 @@ namespace FormularioBasico
         //btnDelete
         private void button4_Click(object sender, EventArgs e)
         {
+            /*cd_func = TrataCodigo(cd_func);
+            try
+            {
+                bool confirma_exclusao = MessageBox.Show("Deseja mesmo DELETAR ESTE REGISTRO?")
+                sql = "delete from tbl_funcionario where cd_func = " + cd_func;
+
+                cn.Open();
+                cm.Connection = cn;
+                cm.CommandText = sql;
+                rd = cm.ExecuteReader();
+
+                if (rd.IsClosed)
+                    rd.Close();
+                else
+                {
+                    if()
+                }
+
+
+
+            }
+            catch(Exception error)
+            {
+                MessageBox.Show(error.Message);
+            }*/
 
         }
 
@@ -104,14 +134,10 @@ namespace FormularioBasico
         //btnRegister
         private void button2_Click(object sender, EventArgs e)
         {
-            int cd_func = 0; //variavel que vai guardar o código
-            string func = "";
-            string cpf = "";
-            string sql; //Variavel que vai guardar o comando sql que vai ler a db
 
             //Trata os erros do formulário
             cd_func = TrataCodigo(cd_func);
-            func = TrataFunc(func);
+            funcionario = TrataFunc(funcionario);
             cpf = TrataCpf(cpf);
 
             //lendo bd
@@ -134,19 +160,24 @@ namespace FormularioBasico
                 { 
                     if (!rd.IsClosed)
                         rd.Close(); //reader 
-                   
-                    sql = "insert into tbl_funcionario(cd_func, nm_func, NO_cpf)values(@Cod, @Nome, @CPF)";
-                    //parameters add adiciona o conteudo das variaveis nos campos do banco de dados
-                    cm.Parameters.Add("@Cod", SqlDbType.Int).Value = cd_func;
-                    cm.Parameters.Add("@Nome", SqlDbType.VarChar).Value = func;
-                    cm.Parameters.Add("@CPF", SqlDbType.Char).Value = cpf;
 
-                    cm.Connection = cn;
-                    cm.CommandText = sql;
-                    cm.ExecuteNonQuery();
-                    MessageBox.Show("Dados inseridos com sucesso");
-                    rd.Close();                    
+                        sql = "insert into tbl_funcionario(cd_func, nm_func, NO_cpf)values(@Cod, @Nome, @CPF)";
+                        //parameters add adiciona o conteudo das variaveis nos campos do banco de dados
+
+                        cm.Parameters.Clear(); //Limpa todos os parametros
+
+                        cm.Parameters.Add("@Cod", SqlDbType.Int).Value = cd_func;
+                        cm.Parameters.Add("@Nome", SqlDbType.VarChar).Value = funcionario;
+                        cm.Parameters.Add("@CPF", SqlDbType.Char).Value = cpf;
+
+                        cm.Connection = cn;
+                        cm.CommandText = sql;
+                        cm.ExecuteNonQuery();
+                        MessageBox.Show("Dados inseridos com sucesso");
+                        LimparCampos();
+                        cn.Close(); //fecha a conexão                   
                 }
+               
 
             }
             catch(Exception erro)
@@ -154,15 +185,48 @@ namespace FormularioBasico
                 MessageBox.Show(erro.Message);
             }
 
+        }
 
-
-
+        private void LimparCampos()
+        {
+            txtCodigo.Clear();
+            txtFunc.Clear();
+            txtCpf.Clear();
         }
 
         //btnSearch
         private void button1_Click(object sender, EventArgs e)
         {
+            cd_func = TrataCodigo(cd_func);//Pegando o código
+            try
+            {
+                sql = "select * from tbl_funcionario where cd_func = " + cd_func.ToString();
 
+                cn.Open(); //abre bd
+                cm.Connection = cn; //fala que o comando vai ser usado nessa conexão
+                cm.CommandText = sql; //usa a string da variavel pra dar o comando sql
+                rd = cm.ExecuteReader(); //Executa o comando no db
+
+                if(!rd.HasRows)
+                {
+                    MessageBox.Show("Código não cadastrado !!", "ERRO !!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    cn.Close();
+                }
+
+                else
+                {
+                    rd.Read(); //Lê  o registro digitado na tabela
+                    txtFunc.Text = rd["nm_func"].ToString();
+                    txtCpf.Text = rd["no_CPF"].ToString();
+                    cn.Close();
+                }
+
+
+            }
+            catch(Exception erro)
+            {
+                MessageBox.Show(erro.Message);
+            }
         }
     }
 }
