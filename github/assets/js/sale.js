@@ -22,11 +22,26 @@ const sandwish = [
     },
 
     {
-        name: "Big Claudinho Bacon",
-        image: "./assets/img/claudinho_salada.jpg",
+        name: "Claudinho Bacon",
+        image: "./assets/img/claudinho_bacon.jpg",
         desc: "20% de desconto",
         cod: `KLY882`
+    },
+
+    {
+        name: "Claudinho Chicken",
+        image: './assets/img/claudinho_frango.jpg',
+        desc: "30% de desconto",
+        cod: `DPK955`
+    },
+
+    {
+        name: "Mega Claudinho",
+        image: './assets/img/mega_claudinho.jpg',
+        desc: "60% de desconto",
+        cod: "SUS192" /*Easter egg*/
     }
+
 ]
 //Array de containers
 const container = [];

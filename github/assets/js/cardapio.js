@@ -19,10 +19,23 @@ const sandwish = [
     },
 
     {
-        name: "Big Claudinho Bacon",
-        image: "./assets/img/claudinho_salada.jpg",
-        desc: "O chefe da casa !! Pão com gergelim, duas folhas de alface crespa, hamburger 140g 100% bovino, cebola fresca, pimentão frito, picles, bacon e uma fatia de queijo cheddar"
+        name: "Claudinho Bacon",
+        image: "./assets/img/claudinho_bacon.jpg",
+        desc: "O chefe da casa !! Pão com gergelim, duas folhas de alface crespa, hamburger 140g 100% bovino, cebola fresca, pimentão frito, picles, bacon e uma fatia de queijo cheddar."
+    },
+
+    {
+        name: "Claudinho Chicken",
+        image: './assets/img/claudinho_frango.jpg',
+        desc: "Um delicioso lanche de frango !!  Pão artesanal,  maionese fresquinha, cebola roxa, alface crespa, duas rodelas de tomate e uma deliciosa fatia de queijo."
+    },
+
+    {
+        name: "Mega Claudinho",
+        image: './assets/img/mega_claudinho.jpg',
+        desc: "Mega Claudinho !! Este lanche é especial.. Vai tudo o que tem na cozinha em cima de um pão gigante e colocado no prato."
     }
+
 ]
 //Array de containers
 const container = [];
